@@ -1,0 +1,61 @@
+﻿@* @model: コントローラーから受け取るデータを定義する。受け取ったデータは変数modelに格納される。 *@
+@* ここでは、db.Todoes.ToList()の結果(Todoモデルクラスのリスト)を指定。 *@
+@model IEnumerable<TodoWebApp.Models.Todo>
+
+@* @から始まるコード部分: Razor構文のコード・ナゲットと呼ばれ、.NETコードがサーバーサイドで処理される部分。 *@
+@{
+    ViewBag.Title = "Index";  // ViewBag: Viewで使用するデータを保持したり、コントローラとビューの間でデータをやり取りする際に使用する
+    Layout = "~/Views/_LayoutPage1.cshtml";  // Layout: 共通レイアウトの指定
+}
+
+<h2>Index</h2>
+
+<p>
+    @* @Html: HTMLヘルパー。HTMLを生成する様々なメソッドが用意されている。 *@
+
+    @* Html.ActionLinkメソッド: リンク(アンカー要素)を生成 *@
+    @* ここではCreateアクション画面へのリンクを生成 *@
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @* Html.DisplayNameForメソッド: モデルの表示名を取得。指定のプロパティにDisplayName属性が設定されていればその値を、未設定ならプロパティ名を取得。 *@
+            @Html.DisplayNameFor(model => model.Summary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Limit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Done)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Summary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Detail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Limit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Done)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
