@@ -5,9 +5,18 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+
+    @*
+        bootstrapを適用/使用するためのリンク。
+        ASP.NET MVCで生成されるHTMLは、bootstrapを使用することを想定した作りになっている。
+        そのため、特別なことをしなくてもモダンなレイアウトに整形される。
+    *@
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
+    @* <div> *@
+    @*containerクラスを指定すると左右に適切な余白を設定してくれる *@
+    <div class="container">
         @RenderBody()
     </div>
 </body>
