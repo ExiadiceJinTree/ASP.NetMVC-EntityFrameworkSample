@@ -12,6 +12,7 @@ namespace TodoWebApp.Controllers
 {
     /// <summary>
     /// Todoのコントローラー。
+    /// コントローラー生成テンプレート"Entity Frameworkを使用した、ビューがあるMVC5コントローラー"で自動生成。
     /// コントローラー自動生成時のオプション:
     ///   ・モデルクラス=Todo  ・データコンテキストクラス=TodoesContext  ・非同期コントローラーアクションの使用=false
     ///   ・ビュー:
@@ -71,7 +72,7 @@ namespace TodoWebApp.Controllers
             {
                 db.Todoes.Add(todo);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             return View(todo);
@@ -103,7 +104,7 @@ namespace TodoWebApp.Controllers
             {
                 db.Entry(todo).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             return View(todo);
         }
@@ -131,7 +132,7 @@ namespace TodoWebApp.Controllers
             Todo todo = db.Todoes.Find(id);
             db.Todoes.Remove(todo);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         /// <summary>
