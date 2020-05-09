@@ -18,6 +18,7 @@ namespace TodoWebApp.Controllers
     ///   ・ビュー:
     ///     ・ビューの生成=true  ・スクリプトライブラリの参照=true  ・レイアウトページの使用=true(~/Views/_LayoutPage1.cshtml)
     /// </summary>
+    [Authorize]  // 本コントローラーには認証された状態でないとアクセスできないようにする。
     public class TodoesController : Controller  // Controllerクラスを継承した独自クラスを継承してもよい
     {
         private TodoesContext db = new TodoesContext();  // コンテキストクラスを介してDBへの操作を行う

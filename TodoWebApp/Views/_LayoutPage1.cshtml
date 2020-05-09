@@ -14,6 +14,15 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
+    @* ログインしている状態で共通レイアウトを表示されたら、ログアウトボタンを表示する。 *@
+    <div class="container">
+        @if (Request.IsAuthenticated)  // Request.IsAuthenticatedプロパティ: 認証済みならtrueとなる。
+        {
+            // ログアウトのリンク(LoginControllerのSignOutアクションへのリンク)を作成。
+            @Html.ActionLink("サインアウト", "SignOut", new { Controller = "Login" });
+        }
+    </div>
+
     @* <div> *@
     @*containerクラスを指定すると左右に適切な余白を設定してくれる *@
     <div class="container">
