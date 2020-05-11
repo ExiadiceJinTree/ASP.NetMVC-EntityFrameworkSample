@@ -37,5 +37,14 @@ namespace TodoWebApp.Models
         /// * UserとRoleはn:mの関係(RoleクラスにもUsersプロパティあり)。このような場合、EntityFrameworkによりUserRolesテーブルというリレーションテーブルが作成される。
         /// </summary>
         public virtual ICollection<Role> Roles { get; set; }
+
+        /// <summary>
+        /// ユーザー作成/編集画面で選択されたロールを保持するためのロールリスト。
+        /// * プロパティ名: UsersControllerで指定したViewBagのキー名と同じ。
+        /// </summary>
+        [Required]
+        [NotMapped]  // DBに保持する必要がないため、DBマッピングから除外する(マイグレーション処理から無視される)。
+        [DisplayName("ロール")]
+        public List<int> RoleIds { get; set; }
     }
 }

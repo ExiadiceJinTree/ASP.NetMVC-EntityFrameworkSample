@@ -33,6 +33,15 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.RoleIds, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @* ListBoxを表示。ViewBagで設定したRoleIdsキー=UserモデルのRoleIdsプロパティを指定することで、ViewBagで設定した値が自動的にリスト項目として設定される。 *@
+                @Html.ListBoxFor(model => model.RoleIds, null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RoleIds, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
