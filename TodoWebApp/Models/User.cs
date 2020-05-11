@@ -13,7 +13,7 @@ namespace TodoWebApp.Models
         /// <summary>
         /// Entity FrameworkのCodeFirstではIdプロパティは自動的に自動作成テーブルの主キーになる。
         /// </summary>
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Index(IsUnique = true)]  // Index属性を付与すると、このプロパティがマップされているDB列にインデックスがあることを示せ、IsUnique=trueに設定することでユニーク制約を設定できる。
