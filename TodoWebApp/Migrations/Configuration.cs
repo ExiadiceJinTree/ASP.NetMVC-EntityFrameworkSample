@@ -60,7 +60,7 @@ namespace TodoWebApp.Migrations
 
             Role users = new Role()  // Users(一般ユーザー)
             {
-                Id = 1,
+                Id = 2,
                 RoleName = "Users",
                 Users = new List<User>(),
             };
