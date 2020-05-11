@@ -46,12 +46,18 @@ namespace TodoWebApp.Models
         /// <returns>指定されたユーザーに割り当てられているすべてのロールの名前を格納している文字列配列。</returns>
         public override string[] GetRolesForUser(string username)
         {
-            // * テストのため固定値で実装
-            if (username.Equals("administrator"))
+            using (var db = new TodoesContext())  // コンテキストクラスを介してDBへの操作を行う
             {
-                return new string[] { "Administrators" };
+                var user = db.Users
+                             .Where(u => u.UserName == username)
+                             .FirstOrDefault();  // 最初に見つかった1件を返却、見つからなければdefault値(classなのでnull)を返す。
+                if (user == null)
+                {
+                    return new string[] { };
+                }
+
+                return user.Roles.Select(r => r.RoleName).ToArray();
             }
-            return new string[] { "Users" };
         }
 
         public override string[] GetUsersInRole(string roleName)
@@ -67,16 +73,8 @@ namespace TodoWebApp.Models
         /// <returns>指定したユーザーが指定したロールに存在する場合は true。それ以外の場合は false。</returns>
         public override bool IsUserInRole(string username, string roleName)
         {
-            // * テストのため固定値で実装
-            if (username.Equals("administrator") && roleName.Equals("Administrators"))
-            {
-                return true;
-            }
-            else if (username.Equals("user") && roleName.Equals("Users"))
-            {
-                return true;
-            }
-            return false;
+            string[] roleNamesForThisUser = this.GetRolesForUser(username);
+            return roleNamesForThisUser.Contains(roleName);
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)

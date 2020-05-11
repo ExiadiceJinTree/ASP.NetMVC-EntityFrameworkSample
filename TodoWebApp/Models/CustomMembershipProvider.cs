@@ -118,16 +118,17 @@ namespace TodoWebApp.Models
         /// <returns>指定されたユーザー名とパスワードが有効な場合は、true。それ以外の場合は、false。</returns>
         public override bool ValidateUser(string username, string password)
         {
-            // * テストのため固定値で実装
-            if (username.Equals("administrator") && password.Equals("password"))
+            using (var db = new TodoesContext())  // コンテキストクラスを介してDBへの操作を行う
             {
+                var user = db.Users
+                             .Where(u => u.UserName == username && u.Password == password)
+                             .FirstOrDefault();  // 最初に見つかった1件を返却、見つからなければdefault値(classなのでnull)を返す。
+                if (user == null)
+                {
+                    return false;
+                }
                 return true;
             }
-            if (username.Equals("user") && password.Equals("password"))
-            {
-                return true;
-            }
-            return false;
         }
     }
 }
