@@ -20,6 +20,14 @@
         {
             // ログアウトのリンク(LoginControllerのSignOutアクションへのリンク)を作成。
             @Html.ActionLink("サインアウト", "SignOut", new { Controller = "Login" });
+
+            // ログインユーザーがAdministrators Roleに所属している場合は、"サインアウト"リンクの右隣にユーザー管理画面へのリンクを表示する。
+            if (User.IsInRole("Administrators"))  // User.IsInRoleメソッド: 現在のログインユーザーが指定されたロールに属しているかどうかを判定する。
+            {
+                <span>|</span>  // "サインアウト"リンクと"ユーザー管理"リンクの仕切り
+                // ユーザー管理画面へのリンク(UsersControllerのIndexアクションへのリンク)を作成。
+                @Html.ActionLink("ユーザー管理", "Index", new { Controller = "Users" });
+            }
         }
     </div>
 
