@@ -26,7 +26,7 @@ namespace TodoWebApp.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return View(db.Users.OrderBy(user => user.UserName).ToList());
         }
 
         // GET: Users/Details/5

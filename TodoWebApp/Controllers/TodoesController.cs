@@ -26,7 +26,10 @@ namespace TodoWebApp.Controllers
         // GET: Todoes
         public ActionResult Index()
         {
-            return View(db.Todoes.ToList());  // Viewページ Index.cshtmlにTodoes.ToList()結果を渡してViewResultを返す
+            return View(db.Todoes.OrderBy(todo => todo.Done)
+                                 .ThenBy(todo => todo.Limit)
+                                 .ThenBy(todo => todo.Summary)
+                                 .ToList());  // Viewページ Index.cshtmlにTodoes.ToList()結果を渡してViewResultを返す
         }
 
         // GET: Todoes/Details/5

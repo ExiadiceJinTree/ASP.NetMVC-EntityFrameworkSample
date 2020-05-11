@@ -23,6 +23,7 @@ namespace TodoWebApp.Models
 
         [Required]
         [DataType(DataType.Password)]
+        [MinLength(6)]
         [DisplayName("パスワード")]
         public string Password { get; set; }
 
