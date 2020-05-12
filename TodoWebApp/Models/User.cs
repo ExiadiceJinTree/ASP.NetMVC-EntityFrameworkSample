@@ -42,7 +42,7 @@ namespace TodoWebApp.Models
         /// ユーザー作成/編集画面で選択されたロールを保持するためのロールリスト。
         /// * プロパティ名: UsersControllerで指定したViewBagのキー名と同じ。
         /// </summary>
-        [Required]
+        //[Required]
         [NotMapped]  // DBに保持する必要がないため、DBマッピングから除外する(マイグレーション処理から無視される)。
         [DisplayName("ロール")]
         public List<int> RoleIds { get; set; }

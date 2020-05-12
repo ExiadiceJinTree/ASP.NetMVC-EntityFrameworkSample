@@ -35,12 +35,16 @@ namespace TodoWebApp.Migrations
             //   - Userの初期データ: 管理者, 一般ユーザー
             //   - Roleの初期データ: Administrators(管理者), Users(一般ユーザー)
             //****************************************************************************************************
+            //====================================================================================================
+            // User用意
+            //====================================================================================================
             User admin = new User()  // 管理者
             {
                 Id = 1,
                 UserName = "admin",
                 Password = "password",
                 Roles = new List<Role>(),
+                //RoleIds = new List<int>(),
             };
 
             User generalUser01 = new User()  // 一般ユーザー
@@ -49,8 +53,12 @@ namespace TodoWebApp.Migrations
                 UserName = "GeneralUser01",
                 Password = "password",
                 Roles = new List<Role>(),
+                //RoleIds = new List<int>(),
             };
 
+            //====================================================================================================
+            // Role用意
+            //====================================================================================================
             Role administrators = new Role()  // Administrators(管理者)
             {
                 Id = 1,
@@ -65,15 +73,22 @@ namespace TodoWebApp.Migrations
                 Users = new List<User>(),
             };
 
+            //====================================================================================================
+            // User-Role設定
+            //====================================================================================================
             admin.Roles.Add(administrators);
+            //admin.RoleIds.Add(administrators.Id);
             administrators.Users.Add(admin);
 
             generalUser01.Roles.Add(users);
+            //generalUser01.RoleIds.Add(users.Id);
             users.Users.Add(generalUser01);
 
+            //====================================================================================================
             // UserとRoleの情報をDBに反映
             // * 本Seedメソッドの引数のcontextパラメータを利用してDBにアクセス。
             // *  DbSet<T>.AddOrUpdate(identifierExpression, entities)メソッド: DBに既存でなければ追加、既存なら更新。第1引数identifierExpressionに指定した値と同等のキーが存在すればAdd、存在しなければUpdate。
+            //====================================================================================================
             context.Users.AddOrUpdate(user => user.Id, new User[] { admin, generalUser01 });
             context.Roles.AddOrUpdate(role => role.Id, new Role[] { administrators, users });
         }
