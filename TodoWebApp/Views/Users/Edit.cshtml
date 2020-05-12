@@ -29,7 +29,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @* なぜかinput要素のvalue属性で明示的に値を設定しないと、パスワードが格納された状態で表示されない。 *@
+                @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @value = Model.Password } })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
