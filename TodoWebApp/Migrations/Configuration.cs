@@ -74,6 +74,13 @@ namespace TodoWebApp.Migrations
             };
 
             //====================================================================================================
+            // パスワードをハッシュ化
+            //====================================================================================================
+            CustomMembershipProvider customMembershipProvider = new CustomMembershipProvider();
+            admin.Password = customMembershipProvider.GeneratePasswordHash(admin.UserName, admin.Password);
+            generalUser01.Password = customMembershipProvider.GeneratePasswordHash(generalUser01.UserName, generalUser01.Password);
+
+            //====================================================================================================
             // User-Role設定
             //====================================================================================================
             admin.Roles.Add(administrators);

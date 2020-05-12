@@ -23,6 +23,12 @@ namespace TodoWebApp.Controllers
     {
         private TodoesContext db = new TodoesContext();
 
+        /// <summary>
+        /// ユーザー認証をするためのメンバーシッププロバイダー。
+        /// </summary>
+        private readonly CustomMembershipProvider _membershipProvider = new CustomMembershipProvider();
+
+
         // GET: Users
         public ActionResult Index()
         {
@@ -64,6 +70,7 @@ namespace TodoWebApp.Controllers
             if (ModelState.IsValid)
             {
                 user.Roles = selectedRoles;  // 選択されたRoleのリストをuserパラメーターのRolesプロパティに設定
+                user.Password = _membershipProvider.GeneratePasswordHash(user.UserName, user.Password);  // パスワードをハッシュ化
 
                 db.Users.Add(user);
                 db.SaveChanges();
@@ -136,7 +143,10 @@ namespace TodoWebApp.Controllers
                     return HttpNotFound();
                 }
                 dbUser.UserName = user.UserName;
-                dbUser.Password = user.Password;
+                if (!dbUser.Password.Equals(user.Password))  // パスワードが変更された時のみパスワードを設定
+                {
+                    dbUser.Password = _membershipProvider.GeneratePasswordHash(user.UserName, user.Password);  // パスワードをハッシュ化
+                }
                 dbUser.RoleIds = user.RoleIds;
                 dbUser.Roles.Clear();
                 dbUser.Roles = selectedRoles;
