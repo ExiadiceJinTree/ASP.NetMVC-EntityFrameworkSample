@@ -14,30 +14,59 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    @* ログインしている状態で共通レイアウトを表示されたら、ログアウトボタンを表示する。 *@
-    <div class="container">
+    @* ログインしている状態でのみ共通レイアウトの上部に表示するもの。 *@
+    <header>
         @if (Request.IsAuthenticated)  // Request.IsAuthenticatedプロパティ: 認証済みならtrueとなる。
         {
-            <span>Hello, @User.Identity.Name</span>
-            <span>|</span>
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        @* 狭い画面サイズ時のハンバーガーメニューを設定 *@
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#naviForAuthenticatedUser">
+                            @* 音声ブラウザにメニューがあることを伝えています *@
+                            <span class="sr-only">Toggle navigation</span>
+                            @* ハンバーガーボタンの3本線を表現 *@
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @*タイトル*@
+                        <a class="navbar-brand" href="#">TODO Web App</a>
+                    </div>
 
-            // ログアウトのリンク(LoginControllerのSignOutアクションへのリンク)を作成。
-            @Html.ActionLink("サインアウト", "SignOut", new { Controller = "Login" });
-
-            // ログインユーザーがAdministrators Roleに所属している場合は、"サインアウト"リンクの右隣にユーザー管理画面へのリンクを表示する。
-            if (User.IsInRole("Administrators"))  // User.IsInRoleメソッド: 現在のログインユーザーが指定されたロールに属しているかどうかを判定する。
-            {
-                <span>|</span>  // "サインアウト"リンクと"ユーザー管理"リンクの仕切り
-                // ユーザー管理画面へのリンク(UsersControllerのIndexアクションへのリンク)を作成。
-                @Html.ActionLink("ユーザー管理", "Index", new { Controller = "Users" });
-            }
+                    <div class="collapse navbar-collapse" id="naviForAuthenticatedUser">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                @Html.ActionLink("TODO一覧", "Index", new { Controller = "Todoes" })
+                            </li>
+                            @* ログインユーザーがAdministrators Roleに所属している場合は、ユーザー管理画面へのリンクを表示する。 *@
+                            @if (User.IsInRole("Administrators"))  // User.IsInRoleメソッド: 現在のログインユーザーが指定されたロールに属しているかどうかを判定する。
+                            {
+                                <li>
+                                    @* ユーザー管理画面へのリンク(UsersControllerのIndexアクションへのリンク)を作成。 *@
+                                    @Html.ActionLink("ユーザー管理", "Index", new { Controller = "Users" })
+                                </li>
+                            }
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="navbar-text">Hello, @User.Identity.Name</li>
+                            <li>
+                                @* ログアウトのリンク(LoginControllerのSignOutアクションへのリンク)を作成。 *@
+                                @Html.ActionLink("サインアウト", "SignOut", new { Controller = "Login" })
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         }
-    </div>
+    </header>
 
-    @* <div> *@
     @*containerクラスを指定すると左右に適切な余白を設定してくれる *@
-    <div class="container">
+    <div class="container" style="padding-top: 35px">
         @RenderBody()
     </div>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>
