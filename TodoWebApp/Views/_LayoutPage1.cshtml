@@ -18,6 +18,9 @@
     <div class="container">
         @if (Request.IsAuthenticated)  // Request.IsAuthenticatedプロパティ: 認証済みならtrueとなる。
         {
+            <span>Hello, @User.Identity.Name</span>
+            <span>|</span>
+
             // ログアウトのリンク(LoginControllerのSignOutアクションへのリンク)を作成。
             @Html.ActionLink("サインアウト", "SignOut", new { Controller = "Login" });
 
