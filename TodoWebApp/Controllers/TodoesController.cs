@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using TodoWebApp.Models;
 
 namespace TodoWebApp.Controllers
@@ -26,7 +27,15 @@ namespace TodoWebApp.Controllers
         // GET: Todoes
         public ActionResult Index()
         {
-            return View(db.Todoes.OrderBy(todo => todo.Done)
+            var loginUser = db.Users.Where(user => user.UserName == User.Identity.Name).FirstOrDefault();  // ログインユーザーのUserテーブル情報を取得
+            if (loginUser == null)
+            {
+                return View(new List<Todo>());  // 仮にログインユーザーが存在しない場合は、空のリストを返す(※全Todoを返すのではない)
+            }
+
+            // ログインユーザーのTodoのみ、ソートしたTodoリストのビューを返却
+            return View(loginUser.Todoes
+                                 .OrderBy(todo => todo.Done)
                                  .ThenBy(todo => todo.Limit)
                                  .ThenBy(todo => todo.Summary)
                                  .ToList());  // Viewページ Index.cshtmlにTodoes.ToList()結果を渡してViewResultを返す
@@ -74,6 +83,13 @@ namespace TodoWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var loginUser = db.Users.Where(user => user.UserName == User.Identity.Name).FirstOrDefault();
+                if (loginUser == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound, User.Identity.Name);
+                }
+                todo.User = loginUser;  // Todoの保持ユーザーを設定
+
                 db.Todoes.Add(todo);
                 db.SaveChanges();
                 return RedirectToAction(nameof(Index));

@@ -46,5 +46,16 @@ namespace TodoWebApp.Models
         [NotMapped]  // DBに保持する必要がないため、DBマッピングから除外する(マイグレーション処理から無視される)。
         [DisplayName("ロール")]
         public List<int> RoleIds { get; set; }
+
+        /// <summary>
+        /// ユーザーが保持しているTodoのコレクション。
+        /// UserモデルとTodoモデルの関連を表すナビゲーションプロパティ。
+        /// * ナビゲーションプロパティ: 2つのモデル(エンティティ)間の関連を表すプロパティ。
+        /// * ナビゲーションプロパティは仮想プロパティである必要がある。
+        ///   エンティティ上でvirtualキーワードの付いたプロパティは、それが遅延ロードされることを表す。
+        ///   つまり、明示的に該当するプロパティにアクセスするまで、参照先の値(ナビゲーションプロパティの値)はDBから取得されない。
+        /// * UserとTodoは1:nの関係。このような場合、EntityFrameworkによりTodoesテーブルにUser_Idという外部キーカラムが作成される。
+        /// </summary>
+        public virtual ICollection<Todo> Todoes { get; set; }
     }
 }

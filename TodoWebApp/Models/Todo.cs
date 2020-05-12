@@ -30,5 +30,15 @@ namespace TodoWebApp.Models
         public DateTime Limit { get; set; }  // DisplayName属性を指定しなければ、@Html.DisplayNameForメソッドなどで表示されるのはプロパティ名となる。
 
         public bool Done { get; set; }
+
+        /// <summary>
+        /// Todoを保持しているユーザー。
+        /// TodoモデルとUserモデルの関連を表すナビゲーションプロパティ。
+        /// * ナビゲーションプロパティ: 2つのモデル(エンティティ)間の関連を表すプロパティ。
+        /// * ナビゲーションプロパティは仮想プロパティである必要がある。
+        ///   エンティティ上でvirtualキーワードの付いたプロパティは、それが遅延ロードされることを表す。
+        ///   つまり、明示的に該当するプロパティにアクセスするまで、参照先の値(ナビゲーションプロパティの値)はDBから取得されない。
+        /// </summary>
+        public virtual User User { get; set; }
     }
 }
