@@ -30,6 +30,15 @@
         </dd>
         *@
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Roles)
+        </dt>
+        <dd>
+            @foreach (var role in Model.Roles.OrderBy(role => role.RoleName))
+            {
+                @Html.DisplayFor(model => role.RoleName)<br />
+            }
+        </dd>
     </dl>
 
     @using (Html.BeginForm()) {
