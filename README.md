@@ -1,18 +1,19 @@
 # Overview
 A Todo app that is a sample of development using ASP.NET MVC and Entity Framework, etc.
 
-# Technology Used
+# Technology Used/Focused
 - ASP.NET MVC (Not ASP.NET Core MVC)
 - Entity Framework
   - Code First
   - Automatic migration
     - Initial data registration
+      - Initial data of User and Role are input.
+- Authentication, Authorization function by Membership Framework
+  - MembershipProvider
+  - RoleProvider
 - Bootstrap
   - Apply the design as a whole
   - Header navigation bar, hamburger button/menu
-- Authentication, Authorization function by Membership Framework:
-  - MembershipProvider
-  - RoleProvider
 
 # Implementation Function
 - ToDo data management function
